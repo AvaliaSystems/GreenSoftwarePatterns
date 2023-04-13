@@ -1,8 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
-const glob = require('glob');
+const { glob } = require('glob');
 const yaml = require('js-yaml');
-const marked = require('marked').marked;
 var fm = require('front-matter');
 
 function slugify(str) {
