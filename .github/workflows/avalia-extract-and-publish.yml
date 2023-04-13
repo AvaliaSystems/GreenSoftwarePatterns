@@ -19,6 +19,12 @@ jobs:
       - name: Run extraction script
         run: node extract-and-publish.js
         working-directory: ./avalia/scripts
+      - name: Check script
+        run: cat extract-and-publish.js
+        working-directory: ./avalia/scripts
+      - name: Check directory
+        run: ls -al
+        working-directory: ./avalia/scripts
       - name: Check generated JSON
         run: cat patterns.json
         working-directory: ./avalia/scripts
