@@ -65,20 +65,13 @@ const extract = async () => {
   const searchPath = '../../docs/catalog/**/*.md';
   const outputFile = 'patterns.json';
 
-  glob(searchPath, async (err, files) => {
-    if (err) {
-      console.error('Error while searching for markdown files:', err);
-      return;
-    }
-
-    try {
-      const results = await Promise.all(files.map(processFile));
-      await fs.writeFile(outputFile, JSON.stringify(results, null, 2));
-      console.log(`Results written to: ${outputFile}`);
-    } catch (err) {
-      console.error('Error processing files:', err);
-    }
-  });
+  const files = await glob(searchPath);
+  const results = [];
+  for (const file of files) {
+    const result = await processFile(file);
+    results.push(result);
+  }
+  await fs.writeFile(outputFile, JSON.stringify(results, null, 2));
 };
 
 const main = async () => {

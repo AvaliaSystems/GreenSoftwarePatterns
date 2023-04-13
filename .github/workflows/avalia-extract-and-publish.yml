@@ -8,10 +8,10 @@ jobs:
     name: Extract patterns from markdown files into JSON file
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 18.9
           cache: yarn
       - name: Install dependencies
         run: npm install
