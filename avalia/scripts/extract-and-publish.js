@@ -90,7 +90,8 @@ const publish = async (patterns) => {
       },
     };
 
-    const response = await fetch(url, {
+    const PUBLISH_URL = `${process.env.DXHUB_KB_API_URL}/api/patterns`;
+    const response = await fetch(PUBLISH_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
