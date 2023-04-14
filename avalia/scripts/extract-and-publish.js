@@ -68,14 +68,43 @@ const extract = async () => {
   const files = await glob(searchPath);
   const results = [];
   for (const file of files) {
-    const result = await processFile(file);
-    results.push(result);
+    if (!file.endsWith('index.md')) {
+      const result = await processFile(file);
+      results.push(result);
+    }
   }
   await fs.writeFile(outputFile, JSON.stringify(results, null, 2));
+  return results;
+};
+
+const publish = async (patterns) => {
+  for (const pattern of patterns) {
+    const payload = {
+      title: pattern.title,
+      summary: pattern.description,
+      catalog: 'Green Software Patterns',
+      url: `https://patterns.greensoftware.foundation/catalog/`,
+      srcUrl: pattern.file,
+      properties: {
+        ...pattern,
+      },
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.DXHUB_KB_API_KEY,
+      },
+      body: JSON.stringify(payload),
+    });
+    console.log(`POSTed ${pattern.slug}, status: ${response.status}`);
+  }
 };
 
 const main = async () => {
-  await extract();
+  const patterns = await extract();
+  await publish(patterns);
 };
 
 main()
