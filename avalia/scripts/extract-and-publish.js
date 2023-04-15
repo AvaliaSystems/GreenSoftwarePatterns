@@ -84,8 +84,8 @@ const publish = async (patterns) => {
       title: pattern.title,
       summary: pattern.description,
       catalog: 'Green Software Patterns',
-      url: `https://patterns.greensoftware.foundation/catalog/`,
-      srcUrl: pattern.file,
+      url: pattern.file.replace(/^..\/docs\/(.*).md$/, 'https://patterns.greensoftware.foundation/$1'),
+      srcUrl: pattern.file.replace(/^..\/docs\/(.*)\.md$/, 'https://github.com/Green-Software-Foundation/patterns/blob/main/docs/$1.md'),
       properties: {
         ...pattern,
       },
