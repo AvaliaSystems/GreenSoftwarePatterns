@@ -58,7 +58,12 @@ const processFile = async (file) => {
   const filePath = path.resolve(file);
   const markdown = await fs.readFile(filePath, 'utf-8');
   const data = extractMarkdownData(markdown);
-  return { file: path.relative('../', file), ...data };
+  return {
+    // file: path.relative('../', file),
+    url: file.replace(/^..\/docs\/(.*).md$/, 'https://patterns.greensoftware.foundation/$1'),
+    srcUrl: file.replace(/^..\/docs\/(.*)\.md$/, 'https://github.com/Green-Software-Foundation/patterns/blob/main/docs/$1.md'),
+    ...data,
+  };
 };
 
 const extract = async () => {
@@ -84,8 +89,6 @@ const publish = async (patterns) => {
       title: pattern.title,
       summary: pattern.description,
       catalog: 'Green Software Patterns',
-      url: pattern.file.replace(/^..\/docs\/(.*).md$/, 'https://patterns.greensoftware.foundation/$1'),
-      srcUrl: pattern.file.replace(/^..\/docs\/(.*)\.md$/, 'https://github.com/Green-Software-Foundation/patterns/blob/main/docs/$1.md'),
       properties: {
         ...pattern,
       },
