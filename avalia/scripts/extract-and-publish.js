@@ -80,6 +80,7 @@ const extract = async () => {
 const publish = async (patterns) => {
   for (const pattern of patterns) {
     const payload = {
+      uid: pattern.slug,
       title: pattern.title,
       summary: pattern.description,
       catalog: 'Green Software Patterns',
